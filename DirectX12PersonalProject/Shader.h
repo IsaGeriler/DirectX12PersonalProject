@@ -13,6 +13,7 @@ public:
 	ID3DBlob* vertexShader;
 	ID3DBlob* pixelShader;
 
+	ConstantBuffer constantBuffer;
 	ScreenSpaceTriangle prim;
 	PSOManager psos;
 
@@ -25,6 +26,7 @@ public:
 
 	void compileShaders(DX12Core* core, std::string vertexShaderFile, std::string pixelShaderFile) {
 		prim.init(core);
+		constantBuffer.init(core, sizeof(PulsingTriangle), 2);
 		ID3DBlob* status;
 		std::string vertexShaderStr = readShaderFile(vertexShaderFile);
 		std::string pixelShaderStr = readShaderFile(pixelShaderFile);
@@ -37,8 +39,20 @@ public:
 		psos.createPSO(core, "Triangle", vertexShader, pixelShader, prim.mesh.inputLayoutDesc);
 	}
 
-	void draw(DX12Core* core) {
+	//void draw(DX12Core* core) {
+	//	core->beginRenderPass();
+	//	psos.bind(core, "Triangle");
+	//	prim.draw(core);
+	//}
+
+	void draw(DX12Core* core, PulsingTriangle* cb) {
+		/* Bind Constant Buffer View to Root Signature index
+		      Index 0 : Vertex Shader constant buffer
+			  Index 1 : Pixel Shader constant buffer
+		*/
 		core->beginRenderPass();
+		constantBuffer.update(cb, sizeof(PulsingTriangle), core->frameIndex());
+		core->getCommandList()->SetGraphicsRootConstantBufferView(1, constantBuffer.getGPUAddress(core->frameIndex()));
 		psos.bind(core, "Triangle");
 		prim.draw(core);
 	}

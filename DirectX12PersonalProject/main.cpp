@@ -1,5 +1,7 @@
+#include "ConstantBuffer.h"
 #include "DX12Core.h"
 #include "Shader.h"
+#include "Timer.h"
 #include "Window.h"
 
 extern "C" {
@@ -15,13 +17,20 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine, int nC
 
 	Shader shader;
 	shader.compileShaders(&core, "ScreenSpaceTriangleVS.txt", "ScreenSpaceTrianglePS.txt");
+
+	PulsingTriangle pulsingTriangleCPU;
+	pulsingTriangleCPU.time = 0.f;
+
+	Timer timer;
 	
 	while (true) {
+		pulsingTriangleCPU.time += timer.dt();
+
 		core.beginFrame();
 		core.beginRenderPass();
 		win.processMessages();
 		if (win.keys[VK_ESCAPE] == 1) break;
-		shader.draw(&core);
+		shader.draw(&core, &pulsingTriangleCPU);
 		core.finishFrame();
 	}
 	core.flushGraphicsQueue();

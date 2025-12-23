@@ -131,12 +131,14 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ConstantBuffer.h" />
     <ClInclude Include="DX12Core.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MyMath.h" />
     <ClInclude Include="PSOManager.h" />
     <ClInclude Include="ScreenSpaceTriangle.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
