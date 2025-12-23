@@ -107,6 +107,10 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <FxCompile />
+    <FxCompile>
+      <EntryPointName>VS/PS</EntryPointName>
+    </FxCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -128,6 +132,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DX12Core.h" />
+    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="MyMath.h" />
+    <ClInclude Include="PSOManager.h" />
+    <ClInclude Include="ScreenSpaceTriangle.h" />
+    <ClInclude Include="Shader.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

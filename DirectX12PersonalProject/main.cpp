@@ -1,4 +1,5 @@
 #include "DX12Core.h"
+#include "Shader.h"
 #include "Window.h"
 
 extern "C" {
@@ -11,11 +12,16 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine, int nC
 
 	DX12Core core;
 	core.init(win.hwnd, 1024, 1024);
+
+	Shader shader;
+	shader.compileShaders(&core, "ScreenSpaceTriangleVS.txt", "ScreenSpaceTrianglePS.txt");
 	
 	while (true) {
 		core.beginFrame();
+		core.beginRenderPass();
 		win.processMessages();
 		if (win.keys[VK_ESCAPE] == 1) break;
+		shader.draw(&core);
 		core.finishFrame();
 	}
 	core.flushGraphicsQueue();
