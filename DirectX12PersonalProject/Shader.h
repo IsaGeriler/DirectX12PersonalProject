@@ -45,13 +45,13 @@ public:
 	//	prim.draw(core);
 	//}
 
-	void draw(DX12Core* core, PulsingTriangle* cb) {
+	void draw(DX12Core* core, LightSpinningTriangle* cb) {
 		/* Bind Constant Buffer View to Root Signature index
 		      Index 0 : Vertex Shader constant buffer
 			  Index 1 : Pixel Shader constant buffer
 		*/
 		core->beginRenderPass();
-		constantBuffer.update(cb, sizeof(PulsingTriangle), core->frameIndex());
+		constantBuffer.update(cb, sizeof(LightSpinningTriangle), core->frameIndex());
 		core->getCommandList()->SetGraphicsRootConstantBufferView(1, constantBuffer.getGPUAddress(core->frameIndex()));
 		psos.bind(core, "Triangle");
 		prim.draw(core);

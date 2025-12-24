@@ -1,9 +1,16 @@
 #pragma once
 
 #include "DX12Core.h"
+#include "MyMath.h"
 
 struct alignas(16) PulsingTriangle {
 	float time;
+};
+
+struct alignas(16) LightSpinningTriangle {
+	float time;
+	float padding[3];
+	Vec4 lights[4];
 };
 
 class ConstantBuffer {
